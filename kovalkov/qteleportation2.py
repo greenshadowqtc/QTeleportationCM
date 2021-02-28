@@ -28,21 +28,17 @@ def teleport(state, mres):
     Z_ = qt.rz(-np.pi, N=3, target=2)
     state_array = state.full()
     if mres == 2:
-        print(2)
         state = -1j * X_ * state
         amp = [state_array[5], state_array[4]]
         return qt.Qobj(amp).unit()
     if mres == 1:
-        print(1)
         state = -1j * Z_ * state
         amp = [-state_array[2], state_array[3]]
         return qt.Qobj(amp).unit()
     if mres == 0:
-        print(0)
         state = -1 * Z_ * X_ * state
         amp = [state_array[1], -state_array[0]]
         return qt.Qobj(amp).unit()
-    print(3)
     amp = [-state_array[6], -state_array[7]]
     return qt.Qobj(amp).unit()
 
