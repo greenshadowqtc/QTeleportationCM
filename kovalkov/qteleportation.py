@@ -24,15 +24,21 @@ def measure(state):
 
 
 def teleport(state, mres):
-    X_ = 1/(-1j)*qt.rx(np.pi, N=3, target=2)
-    Z_ = 1/(-1j)*qt.rz(np.pi, N=3, target=2)
-    if mres == 1:
-        state = X_ * state
-    if mres == 2:
-        state = Z_ * state
-    if mres == 3:
-        state = Z_ * X_ * state
+    X_ = qt.rx(-np.pi, N=3, target=2)
+    Z_ = qt.rz(-np.pi, N=3, target=2)
     state_array = state.full()
+    if mres == 1:
+        state = -1j * X_ * state
+        amp = [state_array[3], state_array[2]]
+        return qt.Qobj(amp).unit()
+    if mres == 2:
+        state = -1j * Z_ * state
+        amp = [state_array[4], -state_array[5]]
+        return qt.Qobj(amp).unit()
+    if mres == 3:
+        state = -1 * Z_ * X_ * state
+        amp = [state_array[7], -state_array[6]]
+        return qt.Qobj(amp).unit()
     amp = [state_array[0], state_array[1]]
     return qt.Qobj(amp).unit()
 
